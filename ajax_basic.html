@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Basic AJAX Demo</title>
+		<link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="main">
+			<h2>Get The Latest Content:</h2>
+			<div class='content' id="content">
+				<input type="button" class="button" value="Get Content" id="btn_content" onclick="getContent();"/>
+			</div><br><br>
+
+            <div id="demo" style="text-align: center;">
+                <h2>ONREADYSTATECHANGE CHALLENGE</h2>
+                <button type="button" onclick="loadDoc()">Change Content</button>
+            </div>
+
+		<script type="text/javascript">
+			
+            //STEP 1: setup the xml http request object
+            var fer = new XMLHttpRequest();
+
+            //STEP 2: prepare the open ajax request
+            fer.open('GET', 'content.html');
+
+            //STEP 3: define the ajax response callback method
+            fer.onreadystatechange = function() 
+            {
+                if (fer.readyState == 4)
+                {
+                    document.getElementById('content').innerHTML = fer.responseText;
+                }
+            }
+
+            //STEP 4: SEND the ajax request for data
+            function getContent() 
+            {
+                fer.send();
+                document.getElementById('btn_content').style.display = 'none';
+            }
+
+            //calling a function using the onreadystatechange property
+            function loadDoc() {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() 
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                    {
+                        document.getElementById("demo").innerHTML = this.responseText;
+                    }
+                };
+                xhttp.open("GET", "fernandito.txt");
+                xhttp.send();
+            }
+		</script>
+    </body>
+</html>
